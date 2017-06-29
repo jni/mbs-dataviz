@@ -357,21 +357,21 @@ sunlight = pd.read_csv('data/peak_sunlight_hours.csv', skiprows=1, header=0)
 sunlight.head()
 sun2 = pd.melt(sunlight, id_vars=['Month'], value_vars=months,
                var_name='Peak sunlight hours', value_name='Month')
-               
+
 sun2.head()
 sun2 = pd.melt(sunlight, value_vars=months,
                var_name='Peak sunlight hours', value_name='Month')
-               
+
 sun2.head()
 sun2 = pd.melt(sunlight, id_vars=['City', 'Country or US State'],
                value_vars=months,
                var_name='Peak sunlight hours', value_name='Month')
-              
+
 sun2.head()
 sun2 = pd.melt(sunlight, id_vars=['City', 'Country or US State'],
                value_vars=months,
                var_name='Month', value_name='Peak sunlight hours')
-              
+
 sun2.head()
 australia_rows = sun2['Country or US State'] == 'Australia'
 sun2oz = sun2.loc[australia_rows]
@@ -394,7 +394,7 @@ for i, (city, data) in enumerate(sun2oz.groupby('City')):
     c = plt.cm.colors.to_hex(f'C{i}')
     plot.line(source=data, x='Month', y='Peak sunlight hours',
               color=c)
-              
+
 plotting.output_file('psh.html')
 plotting.show(plot)
 get_ipython().magic('pwd ')
@@ -408,7 +408,7 @@ for i, (city, data) in enumerate(sun2oz.groupby('City')):
     c = plt.cm.colors.to_hex(f'C{i}')
     plot.line(source=data, x='Month', y='Peak sunlight hours',
               color=c)
-              
+
 plotting.output_file('psh.html')
 plotting.show(plot)
 plot = plotting.figure(tools=TOOLS)
@@ -418,7 +418,7 @@ for i, (city, data) in enumerate(sun2oz.groupby('City')):
     c = plt.cm.colors.to_hex(f'C{i}')
     plot2.line(source=data, x='Month', y='Peak sunlight hours',
                color=c)
-              
+
 plotting.output_file('psh2.html')
 plotting.show(plot2)
 angles.shape
@@ -440,7 +440,7 @@ with plt.style.context('dark_background'):
     ax.scatter(x, d, s=0.5, linewidth=0, color=plt.cm.magma(1.0))
     ax.set_xlabel('x position (Mpsec)')
     ax.set_ylabel('Distance from Earth (Mpsec)')
-    
+
 with plt.style.context('dark_background'):
     fig, ax = plt.subplots()
     d, x = X.T
@@ -449,4 +449,40 @@ with plt.style.context('dark_background'):
     ax.set_ylabel('Distance from Earth (Mpsec)')
     ax.set_xlim(np.min(x), np.max(x))
     ax.set_ylim(np.min(d), np.max(d))
-    
+
+
+get_ipython().magic('pinfo plt.cm.colors.rgb2hex')
+plt.cm.colors.rgb2hex((255, 255, 0))
+plt.cm.colors.rgb2hex((1.0, 1.0, 0))
+get_ipython().magic('pinfo sns.pairplot')
+import seaborn.apionly as sns
+get_ipython().magic('pinfo sns.pairplot')
+get_ipython().magic('ls ')
+color_palette = np.array([[71, 117, 167],
+                          [120, 121, 122],
+                          [248, 213, 95],
+                          [140, 175, 83],
+                          [152, 109, 163],
+                          [169, 93, 100]]) / 255
+
+cars = pd.read_csv('cars.csv')
+cars = pd.read_csv('data/cars.csv')
+origin_dict = {1: 'USA', 2: 'Europe', 3: 'Japan'}
+cars['origin name'] = cars['origin'].apply(origin_dict.get)
+sns.pairplot(data=cars,
+             x_vars=['weight'],
+             y_vars=['mpg'],
+             hue='origin name',
+             palette=dict(zip(origin_dict.values(), color_palette)))
+
+len(set(cars['name']))
+cars.shape
+sns.pairplot(data=cars,
+             x_vars=['weight'],
+             y_vars=['mpg'],
+             hue='origin name')
+
+_.fig.legends[0].draggable(True)
+_.fig.legends[0].draggable(False)
+_16.fig.legends[0].draggable(False)
+_16.fig.savefig('cars-scatter.png', dpi=300)
