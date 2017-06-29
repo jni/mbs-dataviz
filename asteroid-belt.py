@@ -78,14 +78,14 @@ color_manual = compute_color(mag_a, mag_i, mag_z)
 #------------------------------------------------------------
 # set up the plot
 with plt.style.context('dark_background'):
-    fig, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
-    ax0.scatter(mag_a, mag_i - mag_z, c=color_manual, s=1)
+    fig, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(10, 5), dpi=300)
+    ax0.scatter(mag_a, mag_i - mag_z, c=color_manual, s=0.25, linewidth=0)
 
     ax0.set_xlabel('Optical Colour (a*)')
     ax0.set_ylabel('Near-IR Colour (i - z)')
 
     # plot the orbital parameters plot
-    ax1.scatter(a, sini, c=color_manual, s=1)
+    ax1.scatter(a, sini, c=color_manual, s=0.25, linewidth=0)
     ax1.set_xlabel('Distance from the Sun (AU)')
     ax1.set_ylabel('Orbital Inclination (Sine)')
 
