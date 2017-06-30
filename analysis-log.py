@@ -486,3 +486,10 @@ _.fig.legends[0].draggable(True)
 _.fig.legends[0].draggable(False)
 _16.fig.legends[0].draggable(False)
 _16.fig.savefig('cars-scatter.png', dpi=300)
+
+cars = pd.read_csv('data/cars.csv')
+origin_dict = {1: 'USA', 2: 'Europe', 3: 'Japan'}
+cars['origin name'] = cars['origin'].apply(origin_dict.get)
+usrows = cars['origin name'] == 'USA'
+uscars = cars.loc[usrows]
+uscars.shape
