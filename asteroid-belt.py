@@ -75,17 +75,27 @@ sini = data['sin_iprime']
 # compute RGB color based on magnitudes
 color_manual = compute_color(mag_a, mag_i, mag_z)
 
+def compute_color_auto(mag_a, mag_i, mag_z):
+    x = mag_a
+    y = mag_i - mag_z
+    theta = np.arctan2(y, x)
+    theta_norm = (theta - np.min(theta)) / (np.max(theta) - np.min(theta))
+    colors = plt.cm.hsv(theta_norm)
+    return colors
+
+color_auto = compute_color_auto(mag_a, mag_i, mag_z)
+
 #------------------------------------------------------------
 # set up the plot
 with plt.style.context('dark_background'):
     fig, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(10, 5), dpi=300)
-    ax0.scatter(mag_a, mag_i - mag_z, c=color_manual, s=0.25, linewidth=0)
+    ax0.scatter(mag_a, mag_i - mag_z, c=color_auto, s=0.25, linewidth=0)
 
     ax0.set_xlabel('Optical Colour (a*)')
     ax0.set_ylabel('Near-IR Colour (i - z)')
 
     # plot the orbital parameters plot
-    ax1.scatter(a, sini, c=color_manual, s=0.25, linewidth=0)
+    ax1.scatter(a, sini, c=color_auto, s=0.25, linewidth=0)
     ax1.set_xlabel('Distance from the Sun (AU)')
     ax1.set_ylabel('Orbital Inclination (Sine)')
 
